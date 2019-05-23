@@ -6,7 +6,7 @@ import "flag"
 var (
 	AppName  = flag.String("logger-app-name", "", "the logger's app name")
 	Filename = flag.String("logger-filename", "", "the logger's filename")
-	Verbose  = flag.Bool("v", false, "if true, then log level is debug")
+	Verbose bool
 )
 
 // Formats
@@ -37,9 +37,14 @@ type Configuration struct {
 
 // FlagConfig generates a Configuration based on flags
 func FlagConfig() Configuration {
+	if flag.Lookup("v") == nil {
+		flag.BoolVar(&Verbose, "v", false, "if true, then log level is debug")
+	} else {
+		Verbose = flag.Lookup("v").Value.(flag.Getter).Get().(bool)
+	}
 	return Configuration{
 		AppName:  *AppName,
 		Filename: *Filename,
-		Verbose:  *Verbose,
+		Verbose:  Verbose,
 	}
 }

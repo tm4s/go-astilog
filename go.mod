@@ -1,4 +1,4 @@
-module github.com/asticode/go-astilog
+module github.com/tm4s/go-astilog
 
 require (
 	github.com/mattn/go-colorable v0.0.9
